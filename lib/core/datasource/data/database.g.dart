@@ -3,11 +3,12 @@
 part of 'database.dart';
 
 // ignore_for_file: type=lint
-class $ProductsTable extends Products with TableInfo<$ProductsTable, Product> {
+class $ProductsTableTable extends ProductsTable
+    with TableInfo<$ProductsTableTable, ProductsTableData> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  $ProductsTable(this.attachedDatabase, [this._alias]);
+  $ProductsTableTable(this.attachedDatabase, [this._alias]);
   static const VerificationMeta _uidMeta = const VerificationMeta('uid');
   @override
   late final GeneratedColumn<String> uid = GeneratedColumn<String>(
@@ -31,11 +32,11 @@ class $ProductsTable extends Products with TableInfo<$ProductsTable, Product> {
   @override
   List<GeneratedColumn> get $columns => [uid, name, price, number];
   @override
-  String get aliasedName => _alias ?? 'products';
+  String get aliasedName => _alias ?? 'products_table';
   @override
-  String get actualTableName => 'products';
+  String get actualTableName => 'products_table';
   @override
-  VerificationContext validateIntegrity(Insertable<Product> instance,
+  VerificationContext validateIntegrity(Insertable<ProductsTableData> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
@@ -69,9 +70,9 @@ class $ProductsTable extends Products with TableInfo<$ProductsTable, Product> {
   @override
   Set<GeneratedColumn> get $primaryKey => const {};
   @override
-  Product map(Map<String, dynamic> data, {String? tablePrefix}) {
+  ProductsTableData map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return Product(
+    return ProductsTableData(
       uid: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}uid'])!,
       name: attachedDatabase.typeMapping
@@ -84,17 +85,18 @@ class $ProductsTable extends Products with TableInfo<$ProductsTable, Product> {
   }
 
   @override
-  $ProductsTable createAlias(String alias) {
-    return $ProductsTable(attachedDatabase, alias);
+  $ProductsTableTable createAlias(String alias) {
+    return $ProductsTableTable(attachedDatabase, alias);
   }
 }
 
-class Product extends DataClass implements Insertable<Product> {
+class ProductsTableData extends DataClass
+    implements Insertable<ProductsTableData> {
   final String uid;
   final String name;
   final double price;
   final double number;
-  const Product(
+  const ProductsTableData(
       {required this.uid,
       required this.name,
       required this.price,
@@ -109,8 +111,8 @@ class Product extends DataClass implements Insertable<Product> {
     return map;
   }
 
-  ProductsCompanion toCompanion(bool nullToAbsent) {
-    return ProductsCompanion(
+  ProductsTableCompanion toCompanion(bool nullToAbsent) {
+    return ProductsTableCompanion(
       uid: Value(uid),
       name: Value(name),
       price: Value(price),
@@ -118,10 +120,10 @@ class Product extends DataClass implements Insertable<Product> {
     );
   }
 
-  factory Product.fromJson(Map<String, dynamic> json,
+  factory ProductsTableData.fromJson(Map<String, dynamic> json,
       {ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return Product(
+    return ProductsTableData(
       uid: serializer.fromJson<String>(json['uid']),
       name: serializer.fromJson<String>(json['name']),
       price: serializer.fromJson<double>(json['price']),
@@ -139,9 +141,9 @@ class Product extends DataClass implements Insertable<Product> {
     };
   }
 
-  Product copyWith(
+  ProductsTableData copyWith(
           {String? uid, String? name, double? price, double? number}) =>
-      Product(
+      ProductsTableData(
         uid: uid ?? this.uid,
         name: name ?? this.name,
         price: price ?? this.price,
@@ -149,7 +151,7 @@ class Product extends DataClass implements Insertable<Product> {
       );
   @override
   String toString() {
-    return (StringBuffer('Product(')
+    return (StringBuffer('ProductsTableData(')
           ..write('uid: $uid, ')
           ..write('name: $name, ')
           ..write('price: $price, ')
@@ -163,25 +165,25 @@ class Product extends DataClass implements Insertable<Product> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is Product &&
+      (other is ProductsTableData &&
           other.uid == this.uid &&
           other.name == this.name &&
           other.price == this.price &&
           other.number == this.number);
 }
 
-class ProductsCompanion extends UpdateCompanion<Product> {
+class ProductsTableCompanion extends UpdateCompanion<ProductsTableData> {
   final Value<String> uid;
   final Value<String> name;
   final Value<double> price;
   final Value<double> number;
-  const ProductsCompanion({
+  const ProductsTableCompanion({
     this.uid = const Value.absent(),
     this.name = const Value.absent(),
     this.price = const Value.absent(),
     this.number = const Value.absent(),
   });
-  ProductsCompanion.insert({
+  ProductsTableCompanion.insert({
     required String uid,
     required String name,
     required double price,
@@ -190,7 +192,7 @@ class ProductsCompanion extends UpdateCompanion<Product> {
         name = Value(name),
         price = Value(price),
         number = Value(number);
-  static Insertable<Product> custom({
+  static Insertable<ProductsTableData> custom({
     Expression<String>? uid,
     Expression<String>? name,
     Expression<double>? price,
@@ -204,12 +206,12 @@ class ProductsCompanion extends UpdateCompanion<Product> {
     });
   }
 
-  ProductsCompanion copyWith(
+  ProductsTableCompanion copyWith(
       {Value<String>? uid,
       Value<String>? name,
       Value<double>? price,
       Value<double>? number}) {
-    return ProductsCompanion(
+    return ProductsTableCompanion(
       uid: uid ?? this.uid,
       name: name ?? this.name,
       price: price ?? this.price,
@@ -237,7 +239,7 @@ class ProductsCompanion extends UpdateCompanion<Product> {
 
   @override
   String toString() {
-    return (StringBuffer('ProductsCompanion(')
+    return (StringBuffer('ProductsTableCompanion(')
           ..write('uid: $uid, ')
           ..write('name: $name, ')
           ..write('price: $price, ')
@@ -249,10 +251,10 @@ class ProductsCompanion extends UpdateCompanion<Product> {
 
 abstract class _$Database extends GeneratedDatabase {
   _$Database(QueryExecutor e) : super(e);
-  late final $ProductsTable products = $ProductsTable(this);
+  late final $ProductsTableTable productsTable = $ProductsTableTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
-  List<DatabaseSchemaEntity> get allSchemaEntities => [products];
+  List<DatabaseSchemaEntity> get allSchemaEntities => [productsTable];
 }

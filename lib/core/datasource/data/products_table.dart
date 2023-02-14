@@ -1,6 +1,6 @@
 import 'package:drift/drift.dart';
 
-class Products extends Table {
+class ProductsTable extends Table {
   TextColumn get uid => text()();
   TextColumn get name => text()();
   RealColumn get price => real()();

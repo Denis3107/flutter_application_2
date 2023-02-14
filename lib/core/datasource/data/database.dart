@@ -8,7 +8,7 @@ import 'package:path/path.dart' as p;
 
 part 'database.g.dart';
 
-@DriftDatabase(tables: [Products])
+@DriftDatabase(tables: [ProductsTable])
 class Database extends _$Database {
   Database() : super(_openConnection());
 

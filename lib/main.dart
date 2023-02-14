@@ -13,16 +13,18 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'core/domain/repository/database_repository.dart';
 
+final Provider<DriftLocalDatabase> driftLocalDatabaseProvider = Provider((ref) => DriftLocalDatabase(driftDatabase: Database()));
+
 final Provider<LocalDatabaseRepository> localDatabaseRepository =
-    Provider((ref) => LocalDatabaseRepositoryImpl(localDatabace: DriftLocalDatabace(driftDatabase: Database())));
+    Provider((ref) => LocalDatabaseRepositoryImpl(localDatabace: ref.read(driftLocalDatabaseProvider)));
 
-///да я помню шо не повиносив
-
-///
-final Provider<AllDataRepository> allDataRepository = Provider((ref) => AllDataRepositoryImpl(allDataApi: TestProductsDataApi()));
+final Provider<TestProductsDataApi> testProductsDataApiProvider = Provider((ref) => TestProductsDataApi());
 
 ///
-final searchProductProvider = FutureProvider.family((ref, String productName) {
+final Provider<AllDataRepository> allDataRepository = Provider((ref) => AllDataRepositoryImpl(allDataApi: ref.read(testProductsDataApiProvider)));
+
+///
+final searchProductProvider = FutureProvider.autoDispose.family((ref, String productName) {
   final LocalDatabaseRepository localDatabase = ref.watch(localDatabaseRepository);
   return localDatabase.searchProduct(productName);
 });

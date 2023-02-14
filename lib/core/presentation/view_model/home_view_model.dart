@@ -20,10 +20,6 @@ class HomeViewModel extends StateNotifier<DatabaseState> {
     state = DatabaseStateDataState(allData: allData);
   }
 
-  void setState(DatabaseState value) {
-    state = value;
-  }
-
   void loadDataBase() async {
     state = DatabaseStateLoadState();
 
